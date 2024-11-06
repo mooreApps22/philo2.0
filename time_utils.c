@@ -24,5 +24,24 @@ long long	elapsed_time(long long then)
 
 void	mssleep(int ms)
 {
+	long long	now;
+	long long	start;
+	long long	elapsed_ms;
+
+	start = get_time();
+	while (1)
+	{
+		usleep(500);
+		now = get_time();
+		elapsed_ms = now - start;
+		if (elapsed_ms >= ms)
+			break ;
+	}
+}
+
+/*
+void	mssleep(int ms)
+{
 	usleep(ms * 1000);
 }
+*/

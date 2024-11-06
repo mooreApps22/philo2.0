@@ -11,21 +11,10 @@
  	cc *.c -fsanitize=thread
 */
 
-void	*start_philo(void *vptr)
-{
-	t_philo	*p;
-	t_data	*t;
-
-	p = (t_philo *)vptr;
-	t = p->t;
-	mssleep(500);
-	output_time_stamp(p, 0, "hello");	
-	return (NULL);
-}
 
 void	validate_args(int ac)
 {
-	if (ac != 2)
+	if (ac != 4)
 	{
 		clean_up_data(NULL, EXIT_FAILURE);
 	}
@@ -35,7 +24,7 @@ void	validate_args(int ac)
 int	main(int ac, char **av)
 {
 	t_data			*t;
-	int				tid_check;
+	int				check;
 	int				i;
 
 	validate_args(ac);
@@ -43,7 +32,7 @@ int	main(int ac, char **av)
 	i = 0;
 	while (i < t->philo_ct)
 	{
-		if (tid_check = pthread_create(&t->p[i].tid, NULL, &start_philo, &t->p[i]) != 0)	
+		if ((check = pthread_create(&t->p[i].tid, NULL, &start_philo, &t->p[i])) != 0)	
 		{
 			printf("pthread_create\n");
 			clean_up_data(t, EXIT_FAILURE);
