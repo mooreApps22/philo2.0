@@ -23,11 +23,8 @@ void	init_philo(t_data *t)
 	{
 		t->p[i].id = i + 1;
 		t->p[i].t = t;
-		t->p[i].right = i;
-		if (i == 0)
-			t->p[i].left = t->philo_ct - 1;
-		else
-			t->p[i].left = i - 1;
+		t->p[i].left = i;
+		t->p[i].right = (i + 1) % t->philo_ct;
 		i++;
 	}
 }

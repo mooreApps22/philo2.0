@@ -1,14 +1,29 @@
 #include "data.h"
 
+/*
+	odds - 
+			lock	- left right
+			unlock	- rigth left
+	evens - 
+			lock	- left right
+			unlock	- 
+*/
+
+void	decide_order(t_philo *p, pthread_mutex_t *first, pthread_mutex_t *second)
+{
+	pthread_mutex_lock(first);
+	output_time_stamp(p,"has taken a fork", 0);
+	pthread_mutex_lock(second);
+	output_time_stamp(p,"has taken a fork", 0);
+}
+
+
 void	eat(t_philo *p, pthread_mutex_t *right, pthread_mutex_t *left, int ms)
 {
-	pthread_mutex_lock(right);
-	output_time_stamp(p,"has taken a fork", 0);	
-	pthread_mutex_lock(left);
-	output_time_stamp(p,"has taken a fork", 0);	
+	decide_order(p, left, right);
 	output_time_stamp(p,"is eating", ms);	
-	pthread_mutex_unlock(right);
 	pthread_mutex_unlock(left);
+	pthread_mutex_unlock(right);
 }
 
 void	*start_philo(void *vptr)
@@ -18,7 +33,7 @@ void	*start_philo(void *vptr)
 
 	p = (t_philo *)vptr;
 	t = p->t;
-	if (p->id % 1)
+	if (p->id % 2)
 		usleep(1500);
 	while (1)
 	{
